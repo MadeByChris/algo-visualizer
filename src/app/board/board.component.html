@@ -1,0 +1,9 @@
+<button (click)="newBoard">Reset</button>
+<main>
+<app-tile 
+    *ngFor="let val of squares; let i = index" 
+    [value]="val" 
+    (click)="flipTile(i)"
+>
+</app-tile>
+</main>
