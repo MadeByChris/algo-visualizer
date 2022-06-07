@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild, ElementRef } from '@angular/core';
+import { TileComponent } from '../tile/tile.component';
+import { ViewChildren, QueryList } from '@angular/core';
 
 @Component({
   selector: 'app-board',
@@ -7,6 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
   squares: any[] = [];
+  
+  @ViewChildren('tile') components:QueryList<TileComponent>;
+
+  ngAfterViewInit(){
+      console.log(this.components.toArray());
+  }
 
   constructor() {
   }
@@ -15,18 +23,15 @@ export class BoardComponent implements OnInit {
     this.newBoard();
   }
 
+
   newBoard() {
     this.squares = Array(7).fill((Array(7).fill(null)));
   }
 
-  flipTile(index: number) {
-    console.log("hello")
-    if (!this.squares[index]) {
-      this.squares.splice(index, 1, "clicked");
-      // this.squares[index].value = "wall";
-    // } else if (this.squares[index].value === "wall") {
-    //   this.squares[index] = !this.squares[index];
-    // }
-    }
+  flipTile(i: number, j: number) {
+    console.log(i, j);
+    console.log(this.squares[i][j]);
+    console.log(this.components.toArray()[(j * 7) + i]);
+    this.components.toArray()[(i * 7) + j].flip();
   }
 }

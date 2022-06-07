@@ -6,7 +6,9 @@
     <app-tile
         *ngFor="let val of squares[i]; let j = index"
         [value]="val" 
-        (click)="flipTile(j)"
+        (click)="flipTile(i, j)"
+        id="{{(i * 7) + j}}"
+        #tile
     >
     </app-tile>
 </div>

@@ -3,11 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-tile',
   template: `
-    <button [ngClass]="btnStyle" (click)="flip()">{{ value }}</button>
-    <!-- <button   *ngIf="value == 'wall'">{{ value }}</button> -->
-    <!-- <button nbButton hero status="info">{{ value }}</button> -->
-
-
+    <button [ngClass]="btnStyle">{{ value }}</button>
   `,
   styleUrls: ['./tile.component.scss']
 })
