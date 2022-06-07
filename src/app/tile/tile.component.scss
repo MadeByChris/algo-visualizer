@@ -1,5 +1,15 @@
 button {
-    height:100%;
-    width: 100%;
-    // justify-content: center;
+  height: 100%;
+  width: 100%;
+  // justify-content: center;
+}
+
+.btn-default {
+  color: white;
+  background-color: blue;
+}
+
+.btn-change {
+  color: Red;
+  background-color: white;
 }

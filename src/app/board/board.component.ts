@@ -16,14 +16,14 @@ export class BoardComponent implements OnInit {
   }
 
   newBoard() {
-    this.squares = Array(9).fill(null);
+    this.squares = Array(7).fill((Array(7).fill(null)));
   }
 
   flipTile(index: number) {
     console.log("hello")
     if (!this.squares[index]) {
-      // this.squares.splice(index, 1, "clicked");
-      this.squares[index].value = "wall";
+      this.squares.splice(index, 1, "clicked");
+      // this.squares[index].value = "wall";
     // } else if (this.squares[index].value === "wall") {
     //   this.squares[index] = !this.squares[index];
     // }
