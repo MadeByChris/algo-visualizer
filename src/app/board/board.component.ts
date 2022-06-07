@@ -8,30 +8,50 @@ import { ViewChildren, QueryList } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  squares: any[] = [];
+  boardTemplate: any[] = [];
   
   @ViewChildren('tile') components:QueryList<TileComponent>;
-
-  ngAfterViewInit(){
-      console.log(this.components.toArray());
-  }
+  tiles: TileComponent[];
 
   constructor() {
   }
+
+  ngAfterViewInit(){
+      this.tiles = this.components.toArray();
+
+      //Set the start and end tiles
+      this.tiles[Math.floor(this.tiles.length / 2)].setValue("start");
+      this.tiles[Math.floor(this.tiles.length / 2)].setStyle("btn-start");
+
+      this.tiles[0].setValue("end");
+      this.tiles[0].setStyle("btn-end");
+
+    }
 
   ngOnInit(): void {
     this.newBoard();
   }
 
-
   newBoard() {
-    this.squares = Array(7).fill((Array(7).fill(null)));
+    this.boardTemplate = Array(7).fill((Array(7).fill(null)));
   }
 
-  flipTile(i: number, j: number) {
-    console.log(i, j);
-    console.log(this.squares[i][j]);
-    console.log(this.components.toArray()[(j * 7) + i]);
-    this.components.toArray()[(i * 7) + j].flip();
+  /**
+   * Handles the logic for when a tile is clicked in the GUI.
+   * @param i column value
+   * @param j row value
+   */
+  handleTileClick(i: number, j: number) {
+    let tileIndex: number = (i * this.boardTemplate.length) + j;
+    this.flipTile(tileIndex);
+  }
+
+  /**
+   * Flips the value of the tile between wall and path.
+   * @param tileIndex 
+   */
+  flipTile(tileIndex: number) {
+    let selectedTile: TileComponent = this.tiles[tileIndex];
+    selectedTile.flip();
   }
 }

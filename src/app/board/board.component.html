@@ -1,12 +1,12 @@
 <button (click)="newBoard">Reset</button>
 <main>
 <div 
-    *ngFor="let val of squares; let i = index" 
+    *ngFor="let val of boardTemplate; let i = index" 
 >
     <app-tile
-        *ngFor="let val of squares[i]; let j = index"
+        *ngFor="let val of boardTemplate[i]; let j = index"
         [value]="val" 
-        (click)="flipTile(i, j)"
+        (click)="handleTileClick(i, j)"
         id="{{(i * 7) + j}}"
         #tile
     >
