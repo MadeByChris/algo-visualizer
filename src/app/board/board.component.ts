@@ -31,9 +31,6 @@ export class BoardComponent implements OnInit {
     for (let i = 0; i < this.tiles.length; i++) {
       this.adjacent[i] = [];
     }
-    
-    // Programatically add adjacent tiles to the adjacency matrix
-    this.addAdjacents();
   }
 
   ngOnInit(): void {
@@ -44,7 +41,7 @@ export class BoardComponent implements OnInit {
     //Reset isLocked
     //Reset each tile
     //Reset board template
-    this.boardTemplate = Array(7).fill((Array(7).fill("")));
+    this.boardTemplate = Array(9).fill((Array(9).fill("")));
 
   }
 
@@ -62,7 +59,8 @@ export class BoardComponent implements OnInit {
         // If index + 1 modular divisible by the len of one row + 1 then don't take the prev value
         if (
           adj1 !== undefined
-          && (
+          && adj1.getValue() !== "wall" 
+          &&(
             this.shouldBeChecked(adj1)
             || adj1.getValue() === "start"
             || adj1.getValue() === "end"
@@ -74,6 +72,7 @@ export class BoardComponent implements OnInit {
         }
         if (
           adj2 !== undefined
+          && adj2.getValue() !== "wall"
           && (
             this.shouldBeChecked(adj2)
             || adj2.getValue() === "start"
@@ -86,6 +85,7 @@ export class BoardComponent implements OnInit {
         }
         if (
           adj3 !== undefined
+          && adj3.getValue() !== "wall"
           && (
             this.shouldBeChecked(adj3)
             || adj3.getValue() === "start"
@@ -98,6 +98,7 @@ export class BoardComponent implements OnInit {
         }
         if (
           adj4 !== undefined
+          && adj4.getValue() !== "wall"
           && (
             this.shouldBeChecked(adj4)
             || adj4.getValue() === "start"
@@ -133,6 +134,8 @@ export class BoardComponent implements OnInit {
     let selectedTile: TileComponent = this.tiles[this.getIndex(i, j)];
 
     if (selectedTile.value === "start") {
+      // Programatically add adjacent tiles to the adjacency matrix
+      this.addAdjacents();
       this.startBFS(i, j);
     }
     selectedTile.flip();
@@ -189,7 +192,7 @@ export class BoardComponent implements OnInit {
           queue.push(adjacent[u][i]);
           this.tiles[adjacent[u][i]].setValue("checked"); //TODO: fix bug where start turns to a wall (don't set value and make new var to check if it should be checked or not)
           this.tiles[adjacent[u][i]].setStyle("btn-checked");
-          await this.wait(100);
+          await this.wait(50);
           // If an adjacent tile to the target is found return true
           if (adjacent[u][i] == 0) {
             return true;
