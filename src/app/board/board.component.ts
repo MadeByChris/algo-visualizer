@@ -46,7 +46,6 @@ export class BoardComponent implements OnInit {
   }
 
   addAdjacents() {
-    // console.log(this.boardTemplate.length);
     for (let i = 0; i < this.boardTemplate.length; i++) {
       for (let j = 0; j < this.boardTemplate[i].length; j++) {
         let index = this.getIndex(i, j);
@@ -59,8 +58,8 @@ export class BoardComponent implements OnInit {
         // If index + 1 modular divisible by the len of one row + 1 then don't take the prev value
         if (
           adj1 !== undefined
-          && adj1.getValue() !== "wall" 
-          &&(
+          && adj1.getValue() !== "wall"
+          && (
             this.shouldBeChecked(adj1)
             || adj1.getValue() === "start"
             || adj1.getValue() === "end"
@@ -109,14 +108,6 @@ export class BoardComponent implements OnInit {
             this.adjacent[index].push(this.getIndex(i, j - 1))
           }
         }
-        // let tile: TileComponent = this.tiles[i]
-        // if((this.shouldBeChecked(tile) || tile.getValue() === "start" || tile.getValue() === "end"))  {
-        // if ((this.shouldBeChecked(this.tiles[this.getIndex(i, j)]) || tile.getValue() === "start" || tile.getValue() === "end")) {
-
-        //   //   }
-
-        //   // }
-        // }
       }
       console.log(this.adjacent);
     }
@@ -148,9 +139,6 @@ export class BoardComponent implements OnInit {
     // console.log(true);
     return tile.getValue() === "path" || tile.getValue() === "";
   }
-  isAdded(cur: number[], next: number[]) {
-    console.log(this.adjacent[this.getIndex(cur[0], cur[1])]);
-  }
 
   /**
    * Runs BFS algorithm on the board.
@@ -161,45 +149,56 @@ export class BoardComponent implements OnInit {
     this.isLocked = true;
     // this.addEdges(i, j);
     console.log("BFS commencing");
-    console.log(await this.runBFS(i, j, this.adjacent));
+    let res = await this.runBFS(i, j, this.adjacent);
+    if (res) {
+      for (let i = res.length - 1; i > 0; i-- ) {
+        this.tiles[res[i]].setValue("solution");
+        this.tiles[res[i]].setStyle("btn-solution");
+        await this.wait(50);
+      }
+    }
   }
+
   async runBFS(i: number, j: number, adjacent) {
     //Get current index
     let middle: TileComponent | undefined = this.tiles[this.getIndex(i, j)];
     if (middle === undefined) return false;
 
     let len = this.tiles.length
-    let queue = [];
+    let queue:number[] = [];
     let visited = Array(len).fill(false);
-    let distance = Array(len).fill(Math.max());
-    let previous = Array(len).fill(-1);
+    let path: number[][];
+    path = new Array(this.tiles.length);
+    for (let i = 0; i < this.tiles.length; i++) {
+      path[i] = [];
+    }
+
+
     visited[this.getIndex(i, j)] = true;
-    distance[this.getIndex(i, j)] = 0;
     queue.push(this.getIndex(i, j));
 
     // While the queue is not empty continue doing BFS
     while (queue.length > 0) {
       let u = queue[0];
+      path[u].push(u);
       queue.splice(0, 1);
+      // If the target is 0 (the end index) return the path to the target
       for (let i = 0; i < adjacent[u].length; i++) {
         if (adjacent[u][i] == 0) {
-          return true;
+          path[adjacent[u][i]] = path[u].map((x) => x);
+          //Return a set to remove duplicate entries
+          return [... new Set(path[adjacent[u][i]])];
         };
         if (visited[adjacent[u][i]] == false) {
+          path[adjacent[u][i]] = path[u].map((x) => x);
+          path[adjacent[u][i]].push(adjacent[u][i]);
           visited[adjacent[u][i]] = true;
-          distance[adjacent[u][i]] = distance[u] + 1;
-          previous[adjacent[u][i]] = u;
           queue.push(adjacent[u][i]);
-          this.tiles[adjacent[u][i]].setValue("checked"); //TODO: fix bug where start turns to a wall (don't set value and make new var to check if it should be checked or not)
+          this.tiles[adjacent[u][i]].setValue("checked");
           this.tiles[adjacent[u][i]].setStyle("btn-checked");
           await this.wait(50);
-          // If an adjacent tile to the target is found return true
-          if (adjacent[u][i] == 0) {
-            return true;
-          };
         }
       }
-      console.log(queue);
     }
     // If the queue is empty and the target hasn't been found return false;
     return false;
