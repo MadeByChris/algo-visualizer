@@ -47,4 +47,9 @@ export class TileComponent {
       }
     }
   }
+  reset() {
+    this.setValue("path");
+    this.setStyle("btn-path");
+    this.htmlStr="";
+  }
 }

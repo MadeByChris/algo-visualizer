@@ -1,8 +1,10 @@
-<button (click)="newBoard">Reset</button>
-<main>
-  <div *ngFor="let val of boardTemplate; let i = index">
-    <app-tile *ngFor="let val of boardTemplate[i]; let j = index" [value]="val" (click)="handleTileClick(i, j)"
-      id="{{(i * 7) + j}}" #tile>
-    </app-tile>
-  </div>
-</main>
+<div class="center-align">
+    <button id="reset-button" (click)="reset()">Reset</button>
+  <main>
+    <div *ngFor="let val of boardTemplate; let i = index">
+      <app-tile *ngFor="let val of boardTemplate[i]; let j = index" [value]="val" (click)="handleTileClick(i, j)"
+        id="{{(i * 7) + j}}" #tile>
+      </app-tile>
+    </div>
+  </main>
+</div>

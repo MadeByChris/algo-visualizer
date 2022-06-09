@@ -1,6 +1,8 @@
 import { Component, OnInit, NgModule, ViewChild, ElementRef } from '@angular/core';
 import { TileComponent } from '../tile/tile.component';
 import { ViewChildren, QueryList } from '@angular/core';
+import { FactoryTarget } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -13,24 +15,29 @@ export class BoardComponent implements OnInit {
   @ViewChildren('tile') components: QueryList<TileComponent>;
   tiles: TileComponent[];
   isLocked: boolean = false;
-  constructor() {
+  constructor(private router: Router){
   }
   adjacent: number[][];
 
   ngAfterViewInit() {
     this.tiles = this.components.toArray();
 
-    //Set the start and end tiles
-    this.tiles[Math.floor(this.tiles.length / 2)].setValue("start");
-    this.tiles[Math.floor(this.tiles.length / 2)].setStyle("btn-start");
-    this.tiles[0].setValue("end");
-    this.tiles[0].setStyle("btn-end");
+    this.configureTilesOnStart();
+    
+  }
 
-    // Set all tiles to have no adjacency
-    this.adjacent = new Array(this.tiles.length);
-    for (let i = 0; i < this.tiles.length; i++) {
-      this.adjacent[i] = [];
-    }
+  configureTilesOnStart() {
+        //Set the start and end tiles
+        this.tiles[Math.floor(this.tiles.length / 2)].setValue("start");
+        this.tiles[Math.floor(this.tiles.length / 2)].setStyle("btn-start");
+        this.tiles[0].setValue("end");
+        this.tiles[0].setStyle("btn-end");
+    
+        // Set all tiles to have no adjacency
+        this.adjacent = new Array(this.tiles.length);
+        for (let i = 0; i < this.tiles.length; i++) {
+          this.adjacent[i] = [];
+        }
   }
 
   ngOnInit(): void {
@@ -38,11 +45,11 @@ export class BoardComponent implements OnInit {
   }
 
   newBoard() {
-    //Reset isLocked
-    //Reset each tile
-    //Reset board template
+    this.isLocked = false;
     this.boardTemplate = Array(9).fill((Array(9).fill("")));
-
+  }
+  reset() {
+    window.location.reload();
   }
 
   addAdjacents() {

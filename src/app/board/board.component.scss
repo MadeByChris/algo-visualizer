@@ -6,3 +6,15 @@ main {
     grid-column-gap: 3px;
     grid-row-gap: 2px;
 }
+.center-align {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#reset-button {
+    color: white;
+    background-color: green;
+    width: 165px;
+    height:80px;
+}
