@@ -1,5 +1,9 @@
 <div class="center-align">
     <button id="reset-button" (click)="reset()">Reset</button>
+    <div contenteditable>
+      <p>Click on a tile to toggle it between a <span style="padding: 3px; background-color: rgb(134, 134, 233);"><b>path</b></span> and a <span style="padding: 3px; background-color: rgb(108, 207, 253);"><b>wall</b></span></p>
+      <p>Click on the <span style="padding: 3px; background-color: rgb(54, 158, 27);"><b>Start</b></span> tile to run Breadth First Search to find an optimal path</p>
+  </div>
   <main>
     <div *ngFor="let val of boardTemplate; let i = index">
       <app-tile *ngFor="let val of boardTemplate[i]; let j = index" [value]="val" (click)="handleTileClick(i, j)"

@@ -1,6 +1,8 @@
 button {
   height: 100%;
   width: 100%;
+  font-size: large;
+  font-weight: 200;
   // justify-content: center;
 }
 
@@ -20,14 +22,14 @@ button {
 
 .btn-start {
   color: white;
-  background-color: orangered;
+  background-color: rgb(54, 158, 27);
   height: 80px;
   margin: 2px;
 }
 
 .btn-end {
   color: white;
-  background-color: rgb(58, 179, 74);
+  background-color: rgb(247, 138, 49);
   height: 80px;
   margin: 2px;
 }
@@ -39,12 +41,6 @@ button {
   margin: 2px;
 }
 
-.btn-checked {
-  color: black;
-  background-color: white;
-  height: 80px;
-  margin: 2px;
-}
 .btn-solution {
   color: black;
   background-color: yellow;

@@ -12,9 +12,22 @@ main {
     justify-content: center;
     flex-direction: column;
 }
+button {
+    font-size: large;
+    font-weight: 200;
+}
 #reset-button {
     color: white;
-    background-color: green;
+    background-color: rgb(134, 134, 233);
+    border: 2px solid white;
     width: 165px;
     height:80px;
+}
+#reset-button:hover {
+    cursor:pointer;
+}
+p {
+    color: white;
+    text-align: center;
+    font-size: large;
 }
