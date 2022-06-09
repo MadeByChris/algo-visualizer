@@ -11,6 +11,7 @@ export class TileComponent {
   @Input() value: string = "path";
   btnStyle = 'btn-path';
   getValue() :string {
+    if (this.value === undefined) return null;
     return this.value;
   }
   setValue(value: string) {
